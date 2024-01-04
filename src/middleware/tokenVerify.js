@@ -11,7 +11,7 @@ verifyToken = async (req, res) => {
 	const token = authorization.split(" ")[1];
 
 	try {
-		const { id } = jwt.verify(token, senhaHash);
+		const { id } = jwt.verify(token, passwordHash);
 
 		const userExists = await knex("users").where({ id }).first();
 

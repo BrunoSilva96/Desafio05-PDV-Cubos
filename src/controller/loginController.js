@@ -6,7 +6,7 @@ const passwordHash = require("../../passwordHash");
 login = async (req, res) => {
 	const { email, password } = req.body;
 
-	if (!email || !password) return res.status(400).json({ menssagem: "É obrigatório username e senha" });
+	if (!email || !password) return res.status(400).json({ menssagem: "É obrigatório email e senha" });
 
 	try {
 		const user = await knex("users").where({ email: email.toLowerCase() }).first();

@@ -1,10 +1,15 @@
 const knex = require("../database/conection");
+const { create, verifyEmail } = require("../services/userService");
 
 createUser = async (req, res) => {
 	const { name, email, password } = req.body;
 
+	const itsExist = await verifyEmail(email);
+
+	if (itsExist) return res.status(400).json({ message: "Email já cadastrado!" });
+
 	try {
-		const user = await knex("users").insert({ name: name, email: email, password: password }).returning("*");
+		const user = create(name, email, password);
 
 		return res.status(200).json({ message: "Usuário cadastrado com sucesso!" });
 	} catch (error) {

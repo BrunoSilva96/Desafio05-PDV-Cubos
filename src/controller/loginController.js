@@ -9,13 +9,13 @@ login = async (req, res) => {
 	if (!email || !password) return res.status(400).json({ menssagem: "É obrigatório username e senha" });
 
 	try {
-		const user = await knex("users").where({ email }).first();
+		const user = await knex("users").where({ email: email.toLowerCase() }).first();
 
 		if (!user) return res.status(404).json({ message: "Usuário não encontrado." });
 
-		//const validPassword = await bcrypt.compare(password, user.password);
+		const validPassword = await bcrypt.compare(password, user.password);
 
-		//if (!validPassword) return res.status(400).json({ message: "Email ou senha não confere." });
+		if (!validPassword) return res.status(400).json({ message: "Email ou senha não confere." });
 
 		const userTokenData = {
 			id: user.id,

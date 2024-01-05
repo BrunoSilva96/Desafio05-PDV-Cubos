@@ -3,7 +3,7 @@ const knex = require("../database/conection");
 
 const passwordHash = require("../../passwordHash");
 
-verifyToken = async (req, res) => {
+verifyToken = async (req, res, next) => {
 	const { authorization } = req.headers;
 
 	if (!authorization) return res.status(401).json({ message: "Não autorizado." });
@@ -17,10 +17,14 @@ verifyToken = async (req, res) => {
 
 		if (!userExists) return res.status(404).json({ message: "Token inválido." });
 
-		const { senha, ...usuario } = userExists;
+		const { senha, ...user } = userExists;
 
-		req.usuario = usuario;
+		req.user = user;
+
+		next();
 	} catch (error) {
 		return res.status(400).json(error.message);
 	}
 };
+
+module.exports = { verifyToken };

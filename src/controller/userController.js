@@ -17,4 +17,8 @@ createUser = async (req, res) => {
 	}
 };
 
-module.exports = { createUser };
+showUser = async (req, res) => {
+	return res.status(200).json(req.user);
+};
+
+module.exports = { createUser, showUser };

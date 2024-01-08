@@ -17,4 +17,16 @@ const userSchema = Joi.object({
 	})
 });
 
-module.exports = userSchema;
+const userUpdateSchema = Joi.object({
+	name: Joi.string().messages({
+		"string.base": "O campo nome tem que ser uma string."
+	}),
+	email: Joi.string().email().messages({
+		"string.email": "O campo e-mail deve conter um formato válido."
+	}),
+	password: Joi.string().min(5).messages({
+		"string.min": "A senha deve conter, no mínimo 5 caracteres."
+	})
+});
+
+module.exports = { userSchema, userUpdateSchema };

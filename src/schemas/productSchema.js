@@ -6,7 +6,7 @@ const productSchema = Joi.object({
 		"string.empty": "O campo descrição é obrigatório.",
 		"string.base": "O campo descrição tem que ser uma string."
 	}),
-	stock_quantity: Joi.number().email().required().messages({
+	stock_quantity: Joi.number().required().messages({
 		"any.required": "O campo quantidade de estoque é obrigatório."
 	}),
 	value: Joi.number().required().messages({
@@ -17,3 +17,5 @@ const productSchema = Joi.object({
 		"any.required": "O campo id da categoria é obrigatório."
 	})
 });
+
+module.exports = { productSchema };

@@ -28,4 +28,8 @@ updateProductService = async (id, description, stock_quantity, value, category_i
 	const product = await knex("products").where({ id: id }).update({ description, stock_quantity, value, category_id });
 };
 
-module.exports = { createProductService, verifyCategory, updateProductService };
+showProducts = async (req, res) => {
+	return await knex("products").returning("*");
+};
+
+module.exports = { createProductService, verifyCategory, updateProductService, showProducts };

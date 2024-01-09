@@ -1,4 +1,4 @@
-const { verifyCategory, createProductService, updateProductService } = require("../services/productService");
+const { verifyCategory, createProductService, updateProductService, showProducts } = require("../services/productService");
 
 createProduct = async (req, res) => {
 	const { description, stock_quantity, value, category_id } = req.body;
@@ -39,4 +39,8 @@ updateProduct = async (req, res) => {
 	}
 };
 
-module.exports = { createProduct, updateProduct };
+showAllProducts = async (req, res) => {
+	return res.status(200).json(await showProducts());
+};
+
+module.exports = { createProduct, updateProduct, showAllProducts };

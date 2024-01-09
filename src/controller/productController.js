@@ -1,4 +1,4 @@
-const { verifyCategory, createProductService } = require("../services/productService");
+const { verifyCategory, createProductService, updateProductService } = require("../services/productService");
 
 createProduct = async (req, res) => {
 	const { description, stock_quantity, value, category_id } = req.body;
@@ -18,4 +18,25 @@ createProduct = async (req, res) => {
 	}
 };
 
-module.exports = { createProduct };
+updateProduct = async (req, res) => {
+	const { id } = req.params;
+	const { description, stock_quantity, value, category_id } = req.body;
+
+	try {
+		if (category_id) {
+			const exist = await verifyCategory(category_id);
+			if (!exist) return res.status(404).json({ message: "Categoria não encontrada." });
+		}
+
+		const productExist = await verifyProduct(id);
+		if (!productExist) return res.status(404).json({ messade: "Produto não encontrado em nosso estoque." });
+
+		const product = updateProductService(id, description, stock_quantity, value, category_id);
+
+		return res.status(201).json({ message: "Produto atualizado com sucesso!" });
+	} catch (error) {
+		return res.status(500).json({ message: "Erro interno no servidor." });
+	}
+};
+
+module.exports = { createProduct, updateProduct };

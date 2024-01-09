@@ -8,10 +8,24 @@ verifyCategory = async (idCategory) => {
 	try {
 		const category = await knex("categories").where({ id: idCategory });
 
-		if (category.length === 1) return true;
+		return category.length === 1 ? true : false;
 	} catch (error) {
 		return console.log(error.message);
 	}
 };
 
-module.exports = { createProductService, verifyCategory };
+verifyProduct = async (idProduct) => {
+	try {
+		const product = await knex("products").where({ id: idProduct });
+
+		return product.length === 1 ? true : false;
+	} catch (error) {
+		return console.log(error.message);
+	}
+};
+
+updateProductService = async (id, description, stock_quantity, value, category_id) => {
+	const product = await knex("products").where({ id: id }).update({ description, stock_quantity, value, category_id });
+};
+
+module.exports = { createProductService, verifyCategory, updateProductService };

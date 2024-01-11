@@ -25,5 +25,6 @@ routes.post("/product", validates(productSchemaValidate.productSchema), product.
 routes.put("/product/:id", validates(productSchemaValidate.UpdateProductSchema), product.updateProduct);
 routes.get("/products", product.showAllProducts);
 routes.get("/product/:id", product.detailProduct);
+routes.delete("/product/:id", product.deleteProduct);
 
 module.exports = routes;

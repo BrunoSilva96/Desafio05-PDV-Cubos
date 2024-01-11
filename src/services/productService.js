@@ -1,7 +1,11 @@
 const knex = require("../database/conection");
 
 createProduct = async (description, stock_quantity, value, category_id) => {
-	const product = await knex("products").insert({ description, stock_quantity, value, category_id });
+	try {
+		const product = await knex("products").insert({ description, stock_quantity, value, category_id });
+	} catch (error) {
+		return console.log(error.message);
+	}
 };
 
 verifyCategory = async (idCategory) => {
@@ -25,18 +29,37 @@ verifyProduct = async (idProduct) => {
 };
 
 updateProduct = async (id, description, stock_quantity, value, category_id) => {
-	const product = await knex("products").where({ id: id }).update({ description, stock_quantity, value, category_id });
+	try {
+		const product = await knex("products").where({ id: id }).update({ description, stock_quantity, value, category_id });
+	} catch (error) {
+		return console.log(error.message);
+	}
 };
 
 showProducts = async (idCategory) => {
-	console.log(idCategory);
-	if (idCategory) return await knex("products").where({ category_id: idCategory });
+	try {
+		if (idCategory) return await knex("products").where({ category_id: idCategory });
 
-	return await knex("products").returning("*");
+		return await knex("products").returning("*");
+	} catch (error) {
+		return console.log(error.message);
+	}
 };
 
 detailOneProduct = async (idProduct) => {
-	if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).first();
+	try {
+		if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).first();
+	} catch (error) {
+		return console.log(error.message);
+	}
 };
 
-module.exports = { createProduct, verifyCategory, verifyProduct, updateProduct, showProducts, detailOneProduct };
+deletProductForId = async (idProduct) => {
+	try {
+		if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).del();
+	} catch (error) {
+		return console.log(error.message);
+	}
+};
+
+module.exports = { createProduct, verifyCategory, verifyProduct, updateProduct, showProducts, detailOneProduct, deletProductForId };

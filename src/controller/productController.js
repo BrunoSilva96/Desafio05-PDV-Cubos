@@ -63,4 +63,18 @@ detailProduct = async (req, res) => {
 	}
 };
 
-module.exports = { createProduct, updateProduct, showAllProducts, detailProduct };
+deleteProduct = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		if (!(await productService.verifyProduct(id))) return res.status(404).json({ message: "Produto não encontrado." });
+
+		await productService.deletProductForId(id);
+
+		return res.status(200).json({ message: "Produto excluído com sucesso!" });
+	} catch (error) {
+		return res.status(500).json({ message: "Erro interno no servidor." });
+	}
+};
+
+module.exports = { createProduct, updateProduct, showAllProducts, detailProduct, deleteProduct };

@@ -1,6 +1,6 @@
 const knex = require("../database/conection");
 
-createProductService = async (description, stock_quantity, value, category_id) => {
+createProduct = async (description, stock_quantity, value, category_id) => {
 	const product = await knex("products").insert({ description, stock_quantity, value, category_id });
 };
 
@@ -24,11 +24,14 @@ verifyProduct = async (idProduct) => {
 	}
 };
 
-updateProductService = async (id, description, stock_quantity, value, category_id) => {
+updateProduct = async (id, description, stock_quantity, value, category_id) => {
 	const product = await knex("products").where({ id: id }).update({ description, stock_quantity, value, category_id });
 };
 
 showProducts = async (idCategory) => {
+	console.log(idCategory);
+	if (idCategory) return await knex("products").where({ category_id: idCategory });
+
 	return await knex("products").returning("*");
 };
 
@@ -36,4 +39,4 @@ detailOneProduct = async (idProduct) => {
 	if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).first();
 };
 
-module.exports = { createProductService, verifyCategory, verifyProduct, updateProductService, showProducts, detailOneProduct };
+module.exports = { createProduct, verifyCategory, verifyProduct, updateProduct, showProducts, detailOneProduct };

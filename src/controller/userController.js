@@ -1,15 +1,15 @@
 const knex = require("../database/conection");
-const { create, verifyEmail, update } = require("../services/userService");
+const userService = require("../services/userService");
 
 createUser = async (req, res) => {
 	const { name, email, password } = req.body;
 
-	const itsExist = await verifyEmail(email);
+	const itsExist = await userService.verifyEmailUser(email);
 
 	if (itsExist) return res.status(400).json({ message: "Email já cadastrado!" });
 
 	try {
-		const user = create(name, email, password);
+		const user = userService.createUser(name, email, password);
 
 		return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
 	} catch (error) {
@@ -27,12 +27,12 @@ updateUser = async (req, res) => {
 
 	try {
 		if (email) {
-			const itsExist = await verifyEmail(email, id);
+			const itsExist = await userService.verifyEmailUser(email, id);
 
 			if (itsExist) return res.status(400).json({ message: "Email já cadastrado!" });
 		}
 
-		const user = update(id, name, email, password);
+		const user = userService.updateUser(id, name, email, password);
 
 		return res.status(200).json({ message: "Usuário atualizado com sucesso!" });
 	} catch (error) {

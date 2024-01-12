@@ -40,4 +40,12 @@ updateClient = async (req, res) => {
 	}
 };
 
-module.exports = { createClient, updateClient };
+showAllClients = async (req, res) => {
+	try {
+		return res.status(200).json(await knex("clients").returning("*"));
+	} catch (error) {
+		return res.status(500).json({ message: "Erro interno no servidor." });
+	}
+};
+
+module.exports = { createClient, updateClient, showAllClients };

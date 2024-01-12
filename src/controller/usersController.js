@@ -1,4 +1,3 @@
-const knex = require("../database/conection");
 const userService = require("../services/userService");
 
 createUser = async (req, res) => {

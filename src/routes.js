@@ -1,13 +1,14 @@
 const express = require("express");
 const category = require("./controller/categoriesController");
-const user = require("./controller/usersController");
 const login = require("./controller/loginController");
+const product = require("./controller/productsController");
+const user = require("./controller/usersController");
+const client = require("./controller/clientsController");
 const validates = require("./middleware/validateBodyRequest");
 const userSchemaValidate = require("./schemas/userSchema");
-const { verifyToken } = require("./middleware/tokenVerify");
-const product = require("./controller/productsController");
 const productSchemaValidate = require("./schemas/productSchema");
-const client = require("./controller/clientsController");
+const clientSchemaValidate = require("./schemas/clientSchema");
+const { verifyToken } = require("./middleware/tokenVerify");
 
 const routes = express();
 
@@ -28,6 +29,6 @@ routes.get("/products", product.showAllProducts);
 routes.get("/product/:id", product.detailProduct);
 routes.delete("/product/:id", product.deleteProduct);
 
-routes.post("/client", client.createClient);
+routes.post("/client", validates(clientSchemaValidate.clientSchema), client.createClient);
 
 module.exports = routes;

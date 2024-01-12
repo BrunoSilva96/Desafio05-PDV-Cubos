@@ -48,4 +48,15 @@ showAllClients = async (req, res) => {
 	}
 };
 
-module.exports = { createClient, updateClient, showAllClients };
+showOneClient = async (req, res) => {
+	const { id } = req.params;
+	try {
+		if (!(await clientExist(id))) return res.status(404).json({ message: "Usuário não existe em nosso sistema." });
+
+		return res.status(200).json(await knex("clients").where({ id: id }).first());
+	} catch (error) {
+		return res.status(500).json({ message: "Erro interno no servidor." });
+	}
+};
+
+module.exports = { createClient, updateClient, showAllClients, showOneClient };

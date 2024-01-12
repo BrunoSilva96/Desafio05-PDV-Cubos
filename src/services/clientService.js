@@ -3,9 +3,9 @@ const { CPF, CNPJ } = require("@julioakira/cpf-cnpj-utils");
 
 clientExist = async (id) => {
 	try {
-		const client = knex("clients").where({ id: id });
+		const client = await knex("clients").where({ id: id }).first();
 
-		return client.lengt > 1 ? true : false;
+		return client.id > 0 ? true : false;
 	} catch (error) {
 		return console.log(error.message);
 	}

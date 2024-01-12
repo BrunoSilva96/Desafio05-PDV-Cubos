@@ -30,5 +30,6 @@ routes.get("/product/:id", product.detailProduct);
 routes.delete("/product/:id", product.deleteProduct);
 
 routes.post("/client", validates(clientSchemaValidate.clientSchema), client.createClient);
+routes.put("/client/:id", validates(clientSchemaValidate.clientUpdateSchema), client.updateClient);
 
 module.exports = routes;

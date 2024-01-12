@@ -51,4 +51,18 @@ createClients = async (name, email, cpf) => {
 	}
 };
 
-module.exports = { validateCpf, verifyEmailClients, createClients, verifyCpfClients };
+updateClients = async (id, name, email, cpf) => {
+	try {
+		if (cpf) {
+			const cpfFormated = CPF.Format(cpf);
+			const client = knex("clients").update({ name, email: email.toLowerCase(), cpf: cpfFormated }).where({ id });
+		}
+		const client = knex("clients").update({ name, email: email.toLowerCase() }).where({ id });
+
+		return client;
+	} catch (error) {
+		return console.log(error.message);
+	}
+};
+
+module.exports = { validateCpf, verifyEmailClients, createClients, verifyCpfClients, updateClients };

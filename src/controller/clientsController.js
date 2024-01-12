@@ -1,5 +1,5 @@
 const knex = require("../database/conection");
-const { validateCpf, verifyEmailClients, createClients, verifyCpfClients } = require("../services/clientService");
+const { validateCpf, verifyEmailClients, createClients, verifyCpfClients, clientExist } = require("../services/clientService");
 
 createClient = async (req, res) => {
 	const { name, email, cpf } = req.body;
@@ -22,6 +22,8 @@ updateClient = async (req, res) => {
 	const { name, email, cpf } = req.body;
 
 	try {
+		if (!(await clientExist(id))) return res.status(404).json({ message: "Usuário não existe em nosso sistema." });
+
 		if (cpf) {
 			if (!(await validateCpf(cpf)) || (await verifyCpfClients(cpf))) return res.status(400).json({ message: "CPF inválido ou já cadastrado em nosso sistema." });
 

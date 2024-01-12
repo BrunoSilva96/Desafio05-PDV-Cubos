@@ -1,6 +1,16 @@
 const knex = require("../database/conection");
 const { CPF, CNPJ } = require("@julioakira/cpf-cnpj-utils");
 
+clientExist = async (id) => {
+	try {
+		const client = knex("clients").where({ id: id });
+
+		return client.lengt > 1 ? true : false;
+	} catch (error) {
+		return console.log(error.message);
+	}
+};
+
 validateCpf = async (cpfClient) => {
 	try {
 		return CPF.Validate(cpfClient) ? true : false;
@@ -65,4 +75,4 @@ updateClients = async (id, name, email, cpf) => {
 	}
 };
 
-module.exports = { validateCpf, verifyEmailClients, createClients, verifyCpfClients, updateClients };
+module.exports = { validateCpf, verifyEmailClients, createClients, verifyCpfClients, updateClients, clientExist };

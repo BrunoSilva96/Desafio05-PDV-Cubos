@@ -43,7 +43,7 @@ showAllProducts = async (req, res) => {
 	const { category_id } = req.query;
 
 	try {
-		if (!(await productService.verifyCategory(category_id))) return res.status(404).json({ message: "Categoria não encontrada." });
+		if (category_id && !(await productService.verifyCategory(category_id))) return res.status(404).json({ message: "Categoria não encontrada." });
 
 		return res.status(200).json(await productService.showProducts(category_id));
 	} catch (error) {

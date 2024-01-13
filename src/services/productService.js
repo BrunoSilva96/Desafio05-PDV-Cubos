@@ -38,9 +38,11 @@ updateProduct = async (id, description, stock_quantity, value, category_id) => {
 
 showProducts = async (idCategory) => {
 	try {
-		if (idCategory) return await knex("products").where({ category_id: idCategory });
-
-		return await knex("products").returning("*");
+		if (idCategory) {
+			return await knex("products").where({ category_id: idCategory });
+		} else {
+			return await knex("products").returning("*");
+		}
 	} catch (error) {
 		return console.log(error.message);
 	}

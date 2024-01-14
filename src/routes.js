@@ -4,6 +4,7 @@ const login = require("./controller/loginController");
 const product = require("./controller/productsController");
 const user = require("./controller/usersController");
 const client = require("./controller/clientsController");
+const order = require("./controller/ordersController");
 const validates = require("./middleware/validateBodyRequest");
 const userSchemaValidate = require("./schemas/userSchema");
 const productSchemaValidate = require("./schemas/productSchema");
@@ -18,7 +19,7 @@ routes.post("/users", validates(userSchemaValidate.userSchema), user.createUser)
 
 routes.post("/login", login.login);
 
-routes.use(verifyToken);
+//routes.use(verifyToken);
 
 routes.get("/user", user.showUser);
 routes.put("/user", validates(userSchemaValidate.userUpdateSchema), user.updateUser);
@@ -33,5 +34,7 @@ routes.post("/client", validates(clientSchemaValidate.clientSchema), client.crea
 routes.put("/client/:id", validates(clientSchemaValidate.clientUpdateSchema), client.updateClient);
 routes.get("/client", client.showAllClients);
 routes.get("/client/:id", client.showOneClient);
+
+routes.post("/order", order.createOrder);
 
 module.exports = routes;

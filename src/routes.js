@@ -36,5 +36,6 @@ routes.get("/client", client.showAllClients);
 routes.get("/client/:id", client.showOneClient);
 
 routes.post("/order", order.createOrder);
+routes.get("/order", order.showOrder);
 
 module.exports = routes;

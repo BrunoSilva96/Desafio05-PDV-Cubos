@@ -13,7 +13,7 @@ createOrder = async (req, res) => {
 
 		const order = await createOrderService(client_id, observation, order_products);
 
-		return res.status(200).json({ message: "Compra concluída comn sucesso. Um email será enviado com o resumo da compra." });
+		return res.status(200).json({ message: "Compra concluída com sucesso. Um email será enviado com o resumo da compra." });
 	} catch (error) {
 		return res.status(500).json({ message: "Erro interno no servidor." });
 	}

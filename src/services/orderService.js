@@ -1,3 +1,4 @@
+const transporter = require("./emailService");
 const knex = require("../database/conection");
 const { verifyProduct } = require("./productService");
 
@@ -20,6 +21,15 @@ createOrderService = async (client_id, observation, orderProducts) => {
 
 			const summaryOrder = await knex("order_products").insert({ order_id: order[0].id, product_id: iterator.product_id, amount_product: iterator.amount_product, value_product: value.value });
 		}
+
+		const client = await knex("clients").where({ id: client_id }).first();
+
+		// transporter.sendMail({
+		// 	from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+		// 	to: `${client.name} <${client.email}>`,
+		// 	subject: "Resumo da compra.",
+		// 	html: `${summary}`
+		// });
 
 		return true;
 	} catch (error) {

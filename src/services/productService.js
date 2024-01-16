@@ -58,6 +58,8 @@ detailOneProduct = async (idProduct) => {
 
 deletProductForId = async (idProduct) => {
 	try {
+		if (await knex("order_products").where({ product_id: idProduct })) return true;
+
 		if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).del();
 	} catch (error) {
 		return console.log(error.message);

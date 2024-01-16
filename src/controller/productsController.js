@@ -69,7 +69,7 @@ deleteProduct = async (req, res) => {
 	try {
 		if (!(await productService.verifyProduct(id))) return res.status(404).json({ message: "Produto não encontrado." });
 
-		await productService.deletProductForId(id);
+		if (await productService.deletProductForId(id)) return res.status(400).json({ mesage: "Não foi possível excluír, produco encontrado em nossos pedidos." });
 
 		return res.status(200).json({ message: "Produto excluído com sucesso!" });
 	} catch (error) {

@@ -1,8 +1,8 @@
 const knex = require("../database/conection");
 
-createProduct = async (description, stock_quantity, value, category_id) => {
+createProduct = async (description, stock_quantity, value, category_id, productImage) => {
 	try {
-		const product = await knex("products").insert({ description, stock_quantity, value, category_id });
+		const product = await knex("products").insert({ description, stock_quantity, value, category_id, product_image: productImage });
 	} catch (error) {
 		return console.log(error.message);
 	}

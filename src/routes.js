@@ -10,6 +10,7 @@ const userSchemaValidate = require("./schemas/userSchema");
 const productSchemaValidate = require("./schemas/productSchema");
 const clientSchemaValidate = require("./schemas/clientSchema");
 const { verifyToken } = require("./middleware/tokenVerify");
+const multer = require("./multer");
 
 const routes = express();
 
@@ -24,7 +25,7 @@ routes.post("/login", login.login);
 routes.get("/user", user.showUser);
 routes.put("/user", validates(userSchemaValidate.userUpdateSchema), user.updateUser);
 
-routes.post("/product", validates(productSchemaValidate.productSchema), product.createProduct);
+routes.post("/product", multer.single("product_image"), validates(productSchemaValidate.productSchema), product.createProduct);
 routes.put("/product/:id", validates(productSchemaValidate.UpdateProductSchema), product.updateProduct);
 routes.get("/products", product.showAllProducts);
 routes.get("/product/:id", product.detailProduct);

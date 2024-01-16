@@ -1,13 +1,17 @@
 const productService = require("../services/productService");
+const { uploadFile } = require("../services/storageService");
 
 createProduct = async (req, res) => {
 	const { description, stock_quantity, value, category_id } = req.body;
+	const product_image = req.file;
 
 	try {
 		const exist = await productService.verifyCategory(category_id);
 
+		const imgFile = await uploadFile(`images/${product_image.originalname}`, product_image.buffer, product_image.mimetype);
+
 		if (exist) {
-			const product = productService.createProduct(description, stock_quantity, value, category_id);
+			const product = productService.createProduct(description, stock_quantity, value, category_id, imgFile);
 
 			return res.status(201).json({ message: "Produto cadastrado com sucesso!" });
 		}

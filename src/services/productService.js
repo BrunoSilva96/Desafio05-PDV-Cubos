@@ -1,4 +1,5 @@
 const knex = require("../database/conection");
+const { deleteFile } = require("./storageService");
 
 createProduct = async (description, stock_quantity, value, category_id, productImage) => {
 	try {
@@ -58,9 +59,13 @@ detailOneProduct = async (idProduct) => {
 
 deletProductForId = async (idProduct) => {
 	try {
-		if (await knex("order_products").where({ product_id: idProduct })) return true;
+		const productInOrder = await knex("order_products").where({ product_id: idProduct });
+		if (productInOrder.length > 0) return false;
 
-		if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).del();
+		const image = await knex("products").where({ id: idProduct }).first();
+		if (image.product_image !== null) deleteFile(image.product_image);
+
+		return await knex("products").where({ id: idProduct }).del();
 	} catch (error) {
 		return console.log(error.message);
 	}

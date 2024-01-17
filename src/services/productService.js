@@ -57,6 +57,16 @@ detailOneProduct = async (idProduct) => {
 	}
 };
 
+verifyProductDescription = async (descriptionProduct) => {
+	try {
+		const registeredProduct = await knex("products").where("description", "ilike", `%${descriptionProduct}%`);
+
+		if (registeredProduct.length > 0) return true;
+	} catch (error) {
+		return console.log(error.message);
+	}
+};
+
 deletProductForId = async (idProduct) => {
 	try {
 		const productInOrder = await knex("order_products").where({ product_id: idProduct });
@@ -71,4 +81,4 @@ deletProductForId = async (idProduct) => {
 	}
 };
 
-module.exports = { createProduct, verifyCategory, verifyProduct, updateProduct, showProducts, detailOneProduct, deletProductForId };
+module.exports = { createProduct, verifyCategory, verifyProduct, updateProduct, showProducts, detailOneProduct, deletProductForId, verifyProductDescription };

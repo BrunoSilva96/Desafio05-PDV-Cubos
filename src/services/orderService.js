@@ -1,8 +1,9 @@
 const transporter = require("./emailService");
 const knex = require("../database/conection");
 const { verifyProduct } = require("./productService");
+const { createToken, charge } = require("../stripe");
 
-createOrderService = async (clientId, observation, orderProducts) => {
+createOrderService = async (clientId, observation, orderProducts, card) => {
 	let totalAmount = 0;
 	const summary = [];
 
@@ -15,7 +16,11 @@ createOrderService = async (clientId, observation, orderProducts) => {
 			summary.push(product);
 		}
 
-		const order = await knex("orders").insert({ client_id: clientId, observation, amount: totalAmount }).returning("*");
+		//const tokenCard = await createToken({ card });
+
+		const demand = await charge(totalAmount, "tok_visa");
+
+		const order = await knex("orders").insert({ client_id: clientId, observation, amount: totalAmount, transaction: demand.id }).returning("*");
 
 		for (const iterator of orderProducts) {
 			const value = await knex("products").where({ id: iterator.product_id }).first("value");
@@ -32,7 +37,7 @@ createOrderService = async (clientId, observation, orderProducts) => {
 			text: `Compra Realizada com sucesso!`
 		});
 
-		return true;
+		return order;
 	} catch (error) {
 		return console.log(error.message);
 	}

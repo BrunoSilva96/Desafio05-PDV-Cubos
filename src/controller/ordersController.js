@@ -1,7 +1,7 @@
 const { clientExist } = require("../services/clientService");
 const { createOrderService, verifyProductsInOrder, verifyQuantityProducts, showOrderService } = require("../services/orderService");
 
-createOrder = async (req, res) => {
+const createOrder = async (req, res) => {
 	const { client_id, observation, order_products, card } = req.body;
 
 	try {
@@ -19,7 +19,7 @@ createOrder = async (req, res) => {
 	}
 };
 
-showOrder = async (req, res) => {
+const showOrder = async (req, res) => {
 	const { client_id } = req.query;
 
 	try {

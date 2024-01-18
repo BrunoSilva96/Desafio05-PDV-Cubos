@@ -1,7 +1,7 @@
 const productService = require("../services/productService");
 const { uploadFile, verifyProductDescription } = require("../services/storageService");
 
-createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
 	const { description, stock_quantity, value, category_id } = req.body;
 	const product_image = req.file;
 
@@ -24,7 +24,7 @@ createProduct = async (req, res) => {
 	}
 };
 
-updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
 	const { id } = req.params;
 	const { description, stock_quantity, value, category_id } = req.body;
 
@@ -45,7 +45,7 @@ updateProduct = async (req, res) => {
 	}
 };
 
-showAllProducts = async (req, res) => {
+const showAllProducts = async (req, res) => {
 	const { category_id } = req.query;
 
 	try {
@@ -57,7 +57,7 @@ showAllProducts = async (req, res) => {
 	}
 };
 
-detailProduct = async (req, res) => {
+const detailProduct = async (req, res) => {
 	const { id } = req.params;
 
 	try {
@@ -69,7 +69,7 @@ detailProduct = async (req, res) => {
 	}
 };
 
-deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
 	const { id } = req.params;
 
 	try {

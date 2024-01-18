@@ -1,7 +1,7 @@
 const knex = require("../database/conection");
 const { validateCpf, verifyEmailClients, createClients, verifyCpfClients, clientExist } = require("../services/clientService");
 
-createClient = async (req, res) => {
+const createClient = async (req, res) => {
 	const { name, email, cpf } = req.body;
 
 	try {
@@ -17,7 +17,7 @@ createClient = async (req, res) => {
 	}
 };
 
-updateClient = async (req, res) => {
+const updateClient = async (req, res) => {
 	const { id } = req.params;
 	const { name, email, cpf } = req.body;
 
@@ -40,7 +40,7 @@ updateClient = async (req, res) => {
 	}
 };
 
-showAllClients = async (req, res) => {
+const showAllClients = async (req, res) => {
 	try {
 		return res.status(200).json(await knex("clients").returning("*"));
 	} catch (error) {
@@ -48,7 +48,7 @@ showAllClients = async (req, res) => {
 	}
 };
 
-showOneClient = async (req, res) => {
+const showOneClient = async (req, res) => {
 	const { id } = req.params;
 	try {
 		if (!(await clientExist(id))) return res.status(404).json({ message: "Usuário não existe em nosso sistema." });

@@ -1,6 +1,6 @@
 const knex = require("../database/conection");
 
-listCategories = async (req, res) => {
+const listCategories = async (req, res) => {
 	try {
 		const categories = await knex("categories").select("description");
 

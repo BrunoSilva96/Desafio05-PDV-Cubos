@@ -1,13 +1,13 @@
 const knex = require("../database/conection");
 const bcrypt = require("bcrypt");
 
-createUser = async (name, email, password) => {
+const createUser = async (name, email, password) => {
 	const encryptedPassword = await bcrypt.hash(password, 10);
 
 	const user = await knex("users").insert({ name: name, email: email.toLowerCase(), password: encryptedPassword }).returning("*");
 };
 
-updateUser = async (id, name, email, password) => {
+const updateUser = async (id, name, email, password) => {
 	try {
 		if (password) {
 			const encryptedPassword = await bcrypt.hash(password, 10);
@@ -21,7 +21,7 @@ updateUser = async (id, name, email, password) => {
 	}
 };
 
-verifyEmailUser = async (email, id) => {
+const verifyEmailUser = async (email, id) => {
 	try {
 		if (id) {
 			const emailExist = await knex("users").where({ id });

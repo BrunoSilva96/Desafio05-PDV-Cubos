@@ -3,7 +3,7 @@ const knex = require("../database/conection");
 const { verifyProduct } = require("./productService");
 const { createToken, charge } = require("../stripe");
 
-createOrderService = async (clientId, observation, orderProducts, card) => {
+const createOrderService = async (clientId, observation, orderProducts, card) => {
 	let totalAmount = 0;
 	const summary = [];
 
@@ -43,7 +43,7 @@ createOrderService = async (clientId, observation, orderProducts, card) => {
 	}
 };
 
-verifyProductsInOrder = async (products) => {
+const verifyProductsInOrder = async (products) => {
 	try {
 		for (const product of products) {
 			if (!(await verifyProduct(product.product_id))) {
@@ -56,7 +56,7 @@ verifyProductsInOrder = async (products) => {
 	}
 };
 
-verifyQuantityProducts = async (productId) => {
+const verifyQuantityProducts = async (productId) => {
 	try {
 		for (const product of productId) {
 			const stillInStock = await knex("products").where({ id: product.product_id }).returning("*");
@@ -76,7 +76,7 @@ verifyQuantityProducts = async (productId) => {
 	}
 };
 
-showOrderService = async (clientId) => {
+const showOrderService = async (clientId) => {
 	try {
 		const summaryOrderProduct = [];
 

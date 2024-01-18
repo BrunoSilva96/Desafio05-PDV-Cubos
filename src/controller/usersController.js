@@ -1,6 +1,6 @@
 const userService = require("../services/userService");
 
-createUser = async (req, res) => {
+const createUser = async (req, res) => {
 	const { name, email, password } = req.body;
 
 	const itsExist = await userService.verifyEmailUser(email);
@@ -16,11 +16,11 @@ createUser = async (req, res) => {
 	}
 };
 
-showUser = async (req, res) => {
+const showUser = async (req, res) => {
 	return res.status(200).json(req.user);
 };
 
-updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
 	const { name, email, password } = req.body;
 	const { id } = req.user;
 

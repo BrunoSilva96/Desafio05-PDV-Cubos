@@ -1,7 +1,7 @@
 const knex = require("../database/conection");
 const { CPF, CNPJ } = require("@julioakira/cpf-cnpj-utils");
 
-clientExist = async (id) => {
+const clientExist = async (id) => {
 	try {
 		const client = await knex("clients").where({ id: id }).first();
 
@@ -11,7 +11,7 @@ clientExist = async (id) => {
 	}
 };
 
-validateCpf = async (cpfClient) => {
+const validateCpf = async (cpfClient) => {
 	try {
 		return CPF.Validate(cpfClient) ? true : false;
 	} catch (error) {
@@ -19,7 +19,7 @@ validateCpf = async (cpfClient) => {
 	}
 };
 
-verifyCpfClients = async (cpf, id) => {
+const verifyCpfClients = async (cpf, id) => {
 	try {
 		if (id) {
 			const cpfExist = await knex("clients").where({ id });
@@ -35,7 +35,7 @@ verifyCpfClients = async (cpf, id) => {
 	}
 };
 
-verifyEmailClients = async (email, id) => {
+const verifyEmailClients = async (email, id) => {
 	try {
 		if (id) {
 			const emailExist = await knex("clients").where({ id });
@@ -51,7 +51,7 @@ verifyEmailClients = async (email, id) => {
 	}
 };
 
-createClients = async (name, email, cpf) => {
+const createClients = async (name, email, cpf) => {
 	try {
 		const client = knex("clients").insert({ name, email: email.toLowerCase(), cpf: CPF.Format(cpf) });
 
@@ -61,7 +61,7 @@ createClients = async (name, email, cpf) => {
 	}
 };
 
-updateClients = async (id, name, email, cpf) => {
+const updateClients = async (id, name, email, cpf) => {
 	try {
 		if (cpf) {
 			const cpfFormated = CPF.Format(cpf);

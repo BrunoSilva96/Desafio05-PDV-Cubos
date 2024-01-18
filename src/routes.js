@@ -20,7 +20,7 @@ routes.post("/users", validates(userSchemaValidate.userSchema), user.createUser)
 
 routes.post("/login", login.login);
 
-//routes.use(verifyToken);
+routes.use(verifyToken);
 
 routes.get("/user", user.showUser);
 routes.put("/user", validates(userSchemaValidate.userUpdateSchema), user.updateUser);

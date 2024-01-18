@@ -1,7 +1,7 @@
 const knex = require("../database/conection");
 const { deleteFile } = require("./storageService");
 
-createProduct = async (description, stock_quantity, value, category_id, productImage) => {
+const createProduct = async (description, stock_quantity, value, category_id, productImage) => {
 	try {
 		const product = await knex("products").insert({ description, stock_quantity, value, category_id, product_image: productImage });
 	} catch (error) {
@@ -9,7 +9,7 @@ createProduct = async (description, stock_quantity, value, category_id, productI
 	}
 };
 
-verifyCategory = async (idCategory) => {
+const verifyCategory = async (idCategory) => {
 	try {
 		const category = await knex("categories").where({ id: idCategory });
 
@@ -19,7 +19,7 @@ verifyCategory = async (idCategory) => {
 	}
 };
 
-verifyProduct = async (idProduct) => {
+const verifyProduct = async (idProduct) => {
 	try {
 		const product = await knex("products").where({ id: idProduct });
 
@@ -29,7 +29,7 @@ verifyProduct = async (idProduct) => {
 	}
 };
 
-updateProduct = async (id, description, stock_quantity, value, category_id) => {
+const updateProduct = async (id, description, stock_quantity, value, category_id) => {
 	try {
 		const product = await knex("products").where({ id: id }).update({ description, stock_quantity, value, category_id });
 	} catch (error) {
@@ -37,7 +37,7 @@ updateProduct = async (id, description, stock_quantity, value, category_id) => {
 	}
 };
 
-showProducts = async (idCategory) => {
+const showProducts = async (idCategory) => {
 	try {
 		if (idCategory) {
 			return await knex("products").where({ category_id: idCategory });
@@ -49,7 +49,7 @@ showProducts = async (idCategory) => {
 	}
 };
 
-detailOneProduct = async (idProduct) => {
+const detailOneProduct = async (idProduct) => {
 	try {
 		if (verifyProduct(idProduct)) return await knex("products").where({ id: idProduct }).first();
 	} catch (error) {
@@ -57,7 +57,7 @@ detailOneProduct = async (idProduct) => {
 	}
 };
 
-verifyProductDescription = async (descriptionProduct) => {
+const verifyProductDescription = async (descriptionProduct) => {
 	try {
 		const registeredProduct = await knex("products").where("description", "ilike", `%${descriptionProduct}%`);
 
@@ -67,7 +67,7 @@ verifyProductDescription = async (descriptionProduct) => {
 	}
 };
 
-deletProductForId = async (idProduct) => {
+const deletProductForId = async (idProduct) => {
 	try {
 		const productInOrder = await knex("order_products").where({ product_id: idProduct });
 		if (productInOrder.length > 0) return false;

@@ -3,7 +3,7 @@ const knex = require("../database/conection");
 
 const passwordHash = require("../../passwordHash");
 
-verifyToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
 	const { authorization } = req.headers;
 
 	if (!authorization) return res.status(401).json({ message: "Não autorizado." });

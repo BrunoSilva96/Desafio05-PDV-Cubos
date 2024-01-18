@@ -5,6 +5,7 @@ const { verifyProduct } = require("./productService");
 createOrderService = async (clientId, observation, orderProducts) => {
 	let totalAmount = 0;
 	const summary = [];
+
 	try {
 		for (const product of orderProducts) {
 			const amount = await knex("products").where({ id: product.product_id }).first("value");
@@ -24,12 +25,12 @@ createOrderService = async (clientId, observation, orderProducts) => {
 
 		const client = await knex("clients").where({ id: clientId }).first();
 
-		// transporter.sendMail({
-		// 	from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
-		// 	to: `${client.name} <${client.email}>`,
-		// 	subject: "Resumo da compra.",
-		// 	html: `${summary}`
-		// });
+		transporter.sendMail({
+			from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+			to: `${client.name} <${client.email}>`,
+			subject: "Confirmação da compra.",
+			text: `Compra Realizada com sucesso!`
+		});
 
 		return true;
 	} catch (error) {

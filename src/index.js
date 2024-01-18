@@ -7,4 +7,4 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 
-app.listen(3001);
+app.listen(3000);
